@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Anushka 💖</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb);
+            background-size: 300% 300%;
+            animation: gradientBG 6s infinite;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+        }
+
+        h1 {
+            font-size: 3rem;
+            animation: pulse 2s infinite;
+            text-shadow: 0 0 20px #ffffff, 0 0 30px #ffcccc, 0 0 40px #ff66b2;
+        }
+
+        @keyframes pulse {
+            0% {transform: scale(1);}
+            50% {transform: scale(1.1);}
+            100% {transform: scale(1);}
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 3s ease-in-out;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        .flower {
+            margin: 20px auto;
+            font-size: 2rem;
+        }
+
+        .love {
+            font-size: 2.5rem;
+            color: #ff66b2;
+            font-weight: bold;
+            margin-top: 20px;
+            animation: flicker 1.5s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% {opacity: 1;}
+            50% {opacity: 0.5;}
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>For Anushka 💖</h1>
+        <div class="flower">🌸🌺🌼💮</div>
+        <div class="message">
+            Sending you hugs and warm kisses,  
+            with all my hope for your health, happiness, and success forever. 💕  
+            And yes, I still can’t forget the way you were playing with that pen that day...  
+            You looked so cute. 😍  
+        </div>
+        <div class="love">I Love You 💕</div>
+    </div>
+    <canvas id="loveCanvas"></canvas>
+    <script>
+        // Heart Animation
+        const canvas = document.getElementById('loveCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const hearts = [];
+        const colors = ['#FF69B4', '#FF1493', '#FFD700', '#FF4500'];
+
+        function createHeart() {
+            return {
+                x: Math.random() * canvas.width,
+                y: canvas.height + Math.random() * 100,
+                size: Math.random() * 8 + 5,
+                speed: Math.random() * 3 + 1,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                opacity: Math.random() * 0.5 + 0.5
+            };
+        }
+
+        function drawHeart(heart) {
+            ctx.beginPath();
+            ctx.moveTo(heart.x, heart.y);
+            ctx.bezierCurveTo(
+                heart.x - heart.size / 2, heart.y - heart.size / 2,
+                heart.x - heart.size, heart.y + heart.size / 3,
+                heart.x, heart.y + heart.size
+            );
+            ctx.bezierCurveTo(
+                heart.x + heart.size, heart.y + heart.size / 3,
+                heart.x + heart.size / 2, heart.y - heart.size / 2,
+                heart.x, heart.y
+            );
+            ctx.fillStyle = `rgba(${hexToRgb(heart.color)},${heart.opacity})`;
+            ctx.fill();
+        }
+
+        function hexToRgb(hex) {
+            const bigint = parseInt(hex.replace('#', ''), 16);
+            return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255].join(',');
+        }
+
+        function update() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hearts.forEach((heart, i) => {
+                heart.y -= heart.speed;
+                if (heart.y < -10) hearts.splice(i, 1);
+                drawHeart(heart);
+            });
+            if (Math.random() < 0.1) hearts.push(createHeart());
+            requestAnimationFrame(update);
+        }
+
+        update();
+    </script>
+</body>
+</html>
